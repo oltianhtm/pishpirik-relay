@@ -1,8 +1,9 @@
-// Pishpirik WebSocket Relay — deploy on Deno Deploy.
+// Pishpirik WebSocket Relay
 const rooms = new Map();
 let nextId = 1;
+const PORT = parseInt(Deno.env.get("PORT") || "8000");
 
-Deno.serve((req) => {
+Deno.serve({ port: PORT, hostname: "0.0.0.0" }, (req) => {
   const url = new URL(req.url);
 
   if (url.pathname === "/" && req.headers.get("upgrade") !== "websocket") {
@@ -65,4 +66,3 @@ Deno.serve((req) => {
 
   return response;
 });
-
